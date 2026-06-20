@@ -167,7 +167,7 @@ SEARCH_ENGINES = [
         "param": "q",
     }
 ]
-]
+
 
 # Regex nhận diện URL board hợp lệ trong kết quả tìm kiếm:
 # pinterest.com/<user>/<board>/ nhưng KHÔNG phải /pin/..., /search/..., /explore/...
