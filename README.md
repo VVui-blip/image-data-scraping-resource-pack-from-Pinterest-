@@ -56,6 +56,26 @@ Required dependencies (requests, beautifulsoup4, lxml) will be installed automat
 
 Quick Start
 
+`pingrabber.download(url)` **tự động nhận diện** URL bạn truyền vào là URL board hay URL pin đơn lẻ, và xử lý phù hợp — bạn không cần phân biệt thủ công.
+
+### Tìm ảnh theo từ khóa (trả về link raw, không tải file)
+
+```
+import pingrabber
+
+links = pingrabber.search("thiên nhiên")
+for url in links:
+    print(url)
+```
+Hàm này **không tải ảnh về máy** — nó chỉ trả về danh sách link ảnh gốc (raw) chất lượng cao. Bạn có thể dùng link đó để xem trước, lọc bớt, hoặc tự tải bằng `requests` nếu muốn.
+
+> Cách hoạt động: `search()` dùng công cụ tìm kiếm (DuckDuckGo, không cần JS) với cú pháp `site:pinterest.com <từ khóa>` để tìm ra vài board liên quan, sau đó tự động chạy qua RSS của các board đó để lấy link ảnh — **không cào trực tiếp trang search của Pinterest**, vì trang đó cần JavaScript render mà `requests` không đọc được.
+
+Tùy chỉnh số board quét và số ảnh mỗi board:
+
+```python
+links = pingrabber.search("nature", max_boards=5, max_images_per_board=10)
+```
 Download all images from a public Pinterest board to the default downloads/ folder:
 
 ```
