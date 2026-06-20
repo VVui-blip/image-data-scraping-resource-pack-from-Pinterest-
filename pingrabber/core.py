@@ -501,4 +501,44 @@ class PinGrabber:
                 src = img.get("src")
                 if not src:
                     continue
-                original_url
+                # Nâng cấp sang ảnh gốc
+                original_url = THUMBNAIL_SIZE_PATTERN.sub("/originals/", src)
+                if original_url not in image_urls:
+                    image_urls.append(original_url)
+
+        return image_urls
+
+# ------------------------------------------------------------------ #
+# CÁC HÀM TIỆN ÍCH ĐỘC LẬP (SHORTCUT WRAPPERS)
+# ------------------------------------------------------------------ #
+
+def download(
+    url: str, 
+    output_dir: str = "pinterest_images", 
+    timeout: int = 15
+) -> List[str]:
+    """Hàm tiện ích nhanh: tự động nhận diện và tải ảnh từ Pin hoặc Board."""
+    grabber = PinGrabber(timeout=timeout)
+    return grabber.download(url, output_dir=output_dir)
+
+
+def search(
+    keyword: str,
+    max_boards: int = 3,
+    max_images_per_board: int = 25,
+    max_retries: int = 2,
+    delay_seconds: float = 1.5,
+    timeout: int = 15,
+) -> List[str]:
+    """
+    Hàm tiện ích nhanh: tìm board liên quan đến từ khóa và trả về danh sách
+    link ảnh raw (chất lượng gốc), không tải file về máy.
+    """
+    grabber = PinGrabber(timeout=timeout)
+    return grabber.search(
+        keyword,
+        max_boards=max_boards,
+        max_images_per_board=max_images_per_board,
+        max_retries=max_retries,
+        delay_seconds=delay_seconds,
+    )
