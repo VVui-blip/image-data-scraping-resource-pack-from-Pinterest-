@@ -38,11 +38,11 @@
 
 ## Installation
 
-You can install PinGrabber directly from the GitHub repository:
+You can install PinGrabber directly from the Pypi repository:
 ```bash
 pip install pingrabber
 ```
-or
+or GitHub repository:
 ```bash
 pip install git+https://github.com/VVui-blip/image-data-scraping-resource-pack-from-Pinterest-.git
 ```
