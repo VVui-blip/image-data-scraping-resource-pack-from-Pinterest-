@@ -6,7 +6,7 @@
 
 **PinGrabber** is a lightweight Python library that scrapes high‑quality images from any public Pinterest board using the official RSS feed provided by Pinterest. It extracts the original, full‑resolution images and downloads them to your local machine with minimal effort.
 
-![Pinterest Banner](https://via.placeholder.com/800x200/EFEFEF/333333?text=Pinterest+Image+Scraping)
+![Pinterest Banner](https://www.logo.wine/a/logo/Pinterest/Pinterest-Icon-White-Dark-Background-Logo.wine.svg)
 
 > **Important** – Use this tool only with public boards and for personal or educational purposes. Always respect Pinterest’s [Terms of Service](https://www.pinterest.com/terms/) and the copyright of image authors.
 
