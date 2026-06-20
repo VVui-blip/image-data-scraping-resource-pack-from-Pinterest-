@@ -27,10 +27,11 @@
 
 ## Features
 
-- Simple shortcut function – download an entire board with one line of code.
+- Simple shortcut function – download an entire board or a single pin with one line of code.
 - Automatic conversion of thumbnail URLs to original high‑resolution images.
 - Customizable output directory.
 - Both high‑level wrapper and low‑level class for fine‑grained control.
+- Keyword search that returns raw image URLs without downloading.
 - Built with `requests`, `BeautifulSoup`, and `lxml` for fast and reliable parsing.
 
 ---
@@ -50,49 +51,49 @@ pip install -r requirements.txt
 pip install .
 ```
 
-Required dependencies (requests, beautifulsoup4, lxml) will be installed automatically.
+The required dependencies (requests, beautifulsoup4, lxml) will be installed automatically.
+
+Optional dependency for better keyword search
+
+For a more robust and stable keyword search, we recommend installing the ddgs package (community‑maintained, formerly duckduckgo-search):
+
+```bash
+pip install ddgs
+```
+
+Or install it together with PinGrabber:
+
+```bash
+pip install .[search]
+```
+
+ddgs provides a more reliable way to query search engines (DuckDuckGo, Bing, Google, etc.) and supports proxy configuration right in the code. Without ddgs, the search() function will fall back to direct requests calls to search engines, which are more prone to blocking.
 
 ---
 
 Quick Start
 
-`pingrabber.download(url)` **tự động nhận diện** URL bạn truyền vào là URL board hay URL pin đơn lẻ, và xử lý phù hợp — bạn không cần phân biệt thủ công.
+pingrabber.download(url) automatically detects whether the given URL is a board or a single pin and handles it accordingly – you don't need to differentiate manually.
 
-### Tìm ảnh theo từ khóa (trả về link raw, không tải file)
-
-```
-import pingrabber
-
-links = pingrabber.search("thiên nhiên")
-for url in links:
-    print(url)
-```
-Hàm này **không tải ảnh về máy** — nó chỉ trả về danh sách link ảnh gốc (raw) chất lượng cao. Bạn có thể dùng link đó để xem trước, lọc bớt, hoặc tự tải bằng `requests` nếu muốn.
-
-> Cách hoạt động: `search()` dùng công cụ tìm kiếm (DuckDuckGo, không cần JS) với cú pháp `site:pinterest.com <từ khóa>` để tìm ra vài board liên quan, sau đó tự động chạy qua RSS của các board đó để lấy link ảnh — **không cào trực tiếp trang search của Pinterest**, vì trang đó cần JavaScript render mà `requests` không đọc được.
-
-Tùy chỉnh số board quét và số ảnh mỗi board:
+Download all images from a board
 
 ```python
-links = pingrabber.search("nature", max_boards=5, max_images_per_board=10)
-```
-Download all images from a public Pinterest board to the default downloads/ folder:
-
-```
 import pingrabber
 
 pingrabber.download("https://www.pinterest.com/username/boardname/")
 ```
-for a single pin:
 
-```
+Download a single pin
+
+```python
 import pingrabber
 
 pingrabber.download("https://www.pinterest.com/pin/119134352618387326/")
 ```
+
 To save images to a custom directory:
 
-```
+```python
 import pingrabber
 
 pingrabber.download(
@@ -101,13 +102,54 @@ pingrabber.download(
 )
 ```
 
+Search images by keyword (returns raw links, no download)
+
+```python
+import pingrabber
+
+links = pingrabber.search("nature")
+for url in links:
+    print(url)
+```
+
+This function does not download any images – it only returns a list of high‑quality raw image URLs. You can preview them, filter, or download them manually with requests if needed.
+
+How it works: search() tries multiple search engines (DuckDuckGo HTML, DuckDuckGo Lite, Bing) using the site:pinterest.com <keyword> query. It rotates user‑agents, retries, and adds delays between attempts to reduce the chance of being blocked. If one engine fails (403/429), it automatically switches to the next. It does not scrape Pinterest’s search page directly, because that page requires JavaScript rendering which requests cannot handle.
+
+Customise the number of boards to scan, images per board, retries, and delay:
+
+```python
+links = pingrabber.search(
+    "nature",
+    max_boards=5,
+    max_images_per_board=10,
+    max_retries=3,
+    delay_seconds=2.5
+)
+```
+
+If search() always returns empty: check the logged WARNING/ERROR messages. If you see 403/429 errors for all fallback engines, your network/IP is likely being rate‑limited by the search engines (common on cloud servers, VPNs, or IPs that have sent many requests). In that case:
+
+· Install ddgs if you haven’t (pip install ddgs) – this is the most significant improvement.
+· If ddgs is installed but still returns nothing, try using a proxy directly with the package:
+  ```python
+  from ddgs import DDGS
+  with DDGS(proxy="socks5://127.0.0.1:9050", timeout=15) as ddgs:
+      results = ddgs.text("site:pinterest.com nature", max_results=5)
+      print(results)
+  ```
+  If that returns results, you can initialise PinGrabber with a similarly proxied session, or simply use the found board URLs with download().
+· Increase max_retries and delay_seconds (this only affects the fallback method).
+· Try a different network/VPN.
+· Alternatively, use the most reliable approach: find a board manually through your browser and call pingrabber.download(board_url) directly – this does not depend on search engines and is always stable.
+
 ---
 
 Advanced Usage
 
 For more control, use the PinGrabber class:
 
-```
+```python
 from pingrabber import PinGrabber
 
 grabber = PinGrabber(timeout=30)
@@ -123,7 +165,7 @@ print(f"Downloaded {len(saved_files)} images")
 
 If you only need the image URLs (without downloading):
 
-```
+```python
 from pingrabber import PinGrabber
 
 grabber = PinGrabber()
@@ -139,7 +181,7 @@ for url in image_urls:
 
 How It Works
 
-1. Board URL to RSS Feed – The provided Pinterest board URL is converted to an RSS feed URL (appending .rss).
+1. Board/Pin URL to RSS Feed – The provided URL is converted to an RSS feed URL (appending .rss for boards, or using the pin’s RSS endpoint).
 2. Fetch RSS – The RSS content is retrieved via a requests GET request.
 3. Parse and Extract – BeautifulSoup with the lxml parser extracts all <img> tags inside the RSS items.
 4. Upgrade to Original – Thumbnail URLs (e.g., 236x) are transformed into originals URLs to fetch the highest available quality.
