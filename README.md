@@ -71,7 +71,7 @@ ddgs provides a more reliable way to query search engines (DuckDuckGo, Bing, Goo
 
 ---
 
-Quick Start
+## Quick Start
 
 pingrabber.download(url) automatically detects whether the given URL is a board or a single pin and handles it accordingly – you don't need to differentiate manually.
 
@@ -145,7 +145,7 @@ If search() always returns empty: check the logged WARNING/ERROR messages. If yo
 
 ---
 
-Advanced Usage
+## Advanced Usage
 
 For more control, use the PinGrabber class:
 
@@ -179,7 +179,7 @@ for url in image_urls:
 
 ---
 
-How It Works
+## How It Works
 
 1. Board/Pin URL to RSS Feed – The provided URL is converted to an RSS feed URL (appending .rss for boards, or using the pin’s RSS endpoint).
 2. Fetch RSS – The RSS content is retrieved via a requests GET request.
@@ -189,7 +189,7 @@ How It Works
 
 ---
 
-Project Structure
+## Project Structure
 
 ```
 pin_grabber/
@@ -204,7 +204,7 @@ pin_grabber/
 
 ---
 
-Dependencies
+## Dependencies
 
 · Python 3.7+
 · requests – HTTP requests.
@@ -215,7 +215,7 @@ All dependencies are listed in requirements.txt and will be installed when using
 
 ---
 
-License
+## License
 
 This project is released under the MIT License. See the LICENSE file for details.
 
