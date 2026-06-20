@@ -1,70 +1,103 @@
-# pingrabber
+# PinGrabber
 
-Thư viện Python đơn giản giúp **cào ảnh chất lượng cao từ một board Pinterest công khai**, thông qua RSS feed mà Pinterest cung cấp sẵn.
+[![PyPI version](https://img.shields.io/badge/pypi-v0.1.0-blue)](https://pypi.org/project/pingrabber/)
+[![Python 3.7+](https://img.shields.io/badge/python-3.7+-green.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-> ⚠️ Lưu ý: Chỉ nên dùng với các board Pinterest công khai và cho mục đích cá nhân/học tập. Hãy tuân thủ Điều khoản dịch vụ của Pinterest và quyền sở hữu của tác giả ảnh.
+**PinGrabber** is a lightweight Python library that scrapes high‑quality images from any public Pinterest board using the official RSS feed provided by Pinterest. It extracts the original, full‑resolution images and downloads them to your local machine with minimal effort.
+
+![Pinterest Banner](https://via.placeholder.com/800x200/EFEFEF/333333?text=Pinterest+Image+Scraping)
+
+> **Important** – Use this tool only with public boards and for personal or educational purposes. Always respect Pinterest’s [Terms of Service](https://www.pinterest.com/terms/) and the copyright of image authors.
 
 ---
 
-## 1. Cài đặt
+## Table of Contents
 
-### Cài từ source (thư mục hiện tại)
+- [Features](#features)
+- [Installation](#installation)
+- [Quick Start](#quick-start)
+- [Advanced Usage](#advanced-usage)
+- [How It Works](#how-it-works)
+- [Project Structure](#project-structure)
+- [Dependencies](#dependencies)
+- [License](#license)
+
+---
+
+## Features
+
+- Simple shortcut function – download an entire board with one line of code.
+- Automatic conversion of thumbnail URLs to original high‑resolution images.
+- Customizable output directory.
+- Both high‑level wrapper and low‑level class for fine‑grained control.
+- Built with `requests`, `BeautifulSoup`, and `lxml` for fast and reliable parsing.
+
+---
+
+## Installation
+
+You can install PinGrabber directly from the GitHub repository:
+
+```bash
+pip install git+https://github.com/VVui-blip/image-data-scraping-resource-pack-from-Pinterest-.git
+```
+
+Alternatively, if you have the source code locally:
 
 ```bash
 pip install -r requirements.txt
 pip install .
 ```
 
-### Hoặc cài thủ công các thư viện cần thiết
-
-```bash
-pip install requests beautifulsoup4 lxml
-```
+Required dependencies (requests, beautifulsoup4, lxml) will be installed automatically.
 
 ---
 
-## 2. Cách sử dụng
+Quick Start
 
-### Cách nhanh nhất — dùng hàm shortcut
+Download all images from a public Pinterest board to the default downloads/ folder:
 
-```python
+```
 import pingrabber
 
 pingrabber.download("https://www.pinterest.com/username/boardname/")
 ```
 
-Ảnh sẽ được tự động tải về thư mục `downloads/` trong thư mục hiện tại.
+To save images to a custom directory:
 
-### Tùy chỉnh thư mục lưu ảnh
-
-```python
+```
 import pingrabber
 
 pingrabber.download(
     "https://www.pinterest.com/username/boardname/",
-    output_dir="anh_pinterest"
+    output_dir="my_pinterest_images"
 )
 ```
 
-### Dùng class `PinGrabber` để kiểm soát chi tiết hơn
+---
 
-```python
+Advanced Usage
+
+For more control, use the PinGrabber class:
+
+```
 from pingrabber import PinGrabber
 
-grabber = PinGrabber(timeout=20)
+grabber = PinGrabber(timeout=30)
 
-# Tải toàn bộ ảnh gốc về thư mục chỉ định
+# Download all original images
 saved_files = grabber.download(
     "https://www.pinterest.com/username/boardname/",
-    output_dir="anh_pinterest"
+    output_dir="high_res_pins"
 )
 
-print(f"Đã tải {len(saved_files)} ảnh")
+print(f"Downloaded {len(saved_files)} images")
 ```
 
-### Chỉ lấy danh sách URL ảnh (không tải về)
+If you only need the image URLs (without downloading):
 
-```python
+```
 from pingrabber import PinGrabber
 
 grabber = PinGrabber()
@@ -78,30 +111,48 @@ for url in image_urls:
 
 ---
 
-## 3. Cách hoạt động
+How It Works
 
-1. Chuyển URL board Pinterest thành URL RSS feed (dạng `.rss`).
-2. Gửi request bằng `requests` để lấy nội dung RSS.
-3. Dùng `beautifulsoup4` (kết hợp `lxml`) để phân tích RSS và trích xuất các thẻ `<img>`.
-4. Nâng cấp URL ảnh thumbnail (vd: `236x`) thành URL ảnh gốc (`originals`) để có chất lượng cao nhất.
-5. Tải toàn bộ ảnh về thư mục bạn chỉ định.
+1. Board URL to RSS Feed – The provided Pinterest board URL is converted to an RSS feed URL (appending .rss).
+2. Fetch RSS – The RSS content is retrieved via a requests GET request.
+3. Parse and Extract – BeautifulSoup with the lxml parser extracts all <img> tags inside the RSS items.
+4. Upgrade to Original – Thumbnail URLs (e.g., 236x) are transformed into originals URLs to fetch the highest available quality.
+5. Download – Each image is downloaded and saved to the specified output directory with a unique filename.
 
 ---
 
-## 4. Cấu trúc thư mục package
+Project Structure
 
 ```
 pin_grabber/
 ├── pingrabber/
-│   ├── __init__.py
-│   └── core.py
-├── requirements.txt
-├── README.md
-└── setup.py
+│   ├── __init__.py          # Package entry point
+│   └── core.py              # Main logic (PinGrabber class + helper functions)
+├── requirements.txt         # Python dependencies
+├── README.md                # This file
+├── setup.py                 # Packaging configuration
+└── LICENSE                  # MIT License
 ```
 
 ---
 
-## 5. Giấy phép
+Dependencies
 
-Phát hành theo giấy phép MIT. Sử dụng tự chịu trách nhiệm về việc tuân thủ điều khoản dịch vụ của Pinterest.
+· Python 3.7+
+· requests – HTTP requests.
+· beautifulsoup4 – HTML/XML parsing.
+· lxml – Fast XML/HTML parser.
+
+All dependencies are listed in requirements.txt and will be installed when using pip install . or the Git install command.
+
+---
+
+License
+
+This project is released under the MIT License. See the LICENSE file for details.
+
+Disclaimer: This tool is provided “as is”. You are solely responsible for ensuring that your usage complies with Pinterest’s Terms of Service and applicable copyright laws.
+
+---
+
+Built with attention for developers who need a quick, clean Pinterest image scraper.
