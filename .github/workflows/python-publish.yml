@@ -9,12 +9,9 @@ jobs:
   build-and-publish:
     name: Build and publish Python package
     runs-on: ubuntu-latest
-    environment:
-      name: pypi
-      url: https://pypi.org/p/pingrabber
     permissions:
-      id-token: write  # ✅ OIDC xác thực
       contents: read
+      #  KHÔNG cần id-token: write khi dùng API Token
 
     steps:
       - name: Checkout source code
@@ -38,4 +35,5 @@ jobs:
 
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
-        # 👉 KHÔNG cần dòng password này nữa
+        with:
+          password: ${{ secrets.PYPI_TOKEN }}  #  Dùng token bạn vừa tạo
