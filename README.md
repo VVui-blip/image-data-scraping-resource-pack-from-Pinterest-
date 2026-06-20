@@ -63,7 +63,13 @@ import pingrabber
 
 pingrabber.download("https://www.pinterest.com/username/boardname/")
 ```
+for a single pin:
 
+```
+import pingrabber
+
+pingrabber.download("https://www.pinterest.com/pin/119134352618387326/")
+```
 To save images to a custom directory:
 
 ```
