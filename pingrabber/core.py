@@ -120,7 +120,53 @@ SEARCH_ENGINES = [
         "name": "bing",
         "url": "https://www.bing.com/search",
         "param": "q",
+    },    
+    {
+        "name": "brave",
+        "url": "https://search.brave.com/search",
+        "param": "q",
     },
+    {
+        "name": "yandex_lite",
+        "url": "https://yandex.com", # Bản Lite của Yandex Nga, HTML siêu nhẹ, ít check bot
+        "param": "text",
+    },
+    {
+        "name": "yahoo",
+        "url": "https://yahoo.com", # HTML lỏng lẻo giống Bing, quét rất mượt
+        "param": "p",
+    },
+    {
+        "name": "ecosia",
+        "url": "https://ecosia.org", # Sử dụng lõi Bing nhưng hệ thống lọc bot lỏng hơn
+        "param": "q",
+    },
+    {
+        "name": "qwant_lite",
+        "url": "https://qwant.com", # Phiên bản không JavaScript của công cụ tìm kiếm Pháp
+        "param": "q",
+    },
+    {
+        "name": "mojeek",
+        "url": "https://mojeek.com", # Bộ máy độc lập hoàn toàn, không có hệ thống chống bot gắt gao
+        "param": "q",
+    },
+    {
+        "name": "gibiru",
+        "url": "https://gibiru.com", # Trang tìm kiếm ẩn danh, cấu trúc HTML thô sơ
+        "param": "q",
+    },
+    {
+        "name": "ask",
+        "url": "https://ask.com", # Trang tìm kiếm lâu đời, máy chủ lọc bot rất yếu
+        "param": "q",
+    },
+    {
+        "name": "seznam",
+        "url": "https://seznam.cz", # Công cụ tìm kiếm nội địa của Séc, bot cào thoải mái
+        "param": "q",
+    }
+]
 ]
 
 # Regex nhận diện URL board hợp lệ trong kết quả tìm kiếm:
