@@ -26,7 +26,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install build twine
 
-      - name: Clean dist directory          # 👈 BƯỚC MỚI: xóa file cũ
+      - name: Clean dist directory          # 👈 THÊM BƯỚC NÀY
         run: rm -rf dist/
 
       - name: Build package
