@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pingrabber"
-version = "1.0.2"
+version = "2.0"
 description = "A lightweight Python library that scrapes high-quality images from any public Pinterest board using the official RSS feed"
 readme = "README.md"
 license = {text = "MIT"}
@@ -39,7 +39,8 @@ requires-python = ">=3.7"
 dependencies = [
     "requests>=2.25.0",
     "beautifulsoup4>=4.9.0",
-    "lxml>=4.6.0"
+    "lxml>=4.6.0",
+    "proxylists>=0.1.0"
 ]
 
 [project.optional-dependencies]
