@@ -32,13 +32,13 @@ search_extra = [r for r in all_requirements if r.lower().startswith("ddgs")]
 
 setup(
     name="pingrabber",
-    version="1.0.1",
+    version="1.0.2",
     description="Thư viện cào ảnh chất lượng cao từ board Pinterest công khai qua RSS feed.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     author="VVui-blip",
     author_email="vuv54581@gmail.com",
-    url="https://github.com/VVui-blip/pin_grabber",
+    url="https://github.com/VVui-blip/image-data-scraping-resource-pack-from-Pinterest-",
     license="MIT",
     packages=find_packages(exclude=("tests", "tests.*")),
     install_requires=requirements,
@@ -63,7 +63,7 @@ setup(
     ],
     keywords="pinterest scraper rss image downloader",
     project_urls={
-        "Source": "https://github.com/yourusername/pin_grabber",
-        "Bug Reports": "https://github.com/yourusername/pin_grabber/issues",
+        "Source": "https://github.com/VVui-blip/image-data-scraping-resource-pack-from-Pinterest-",
+        "Bug Reports": "https://github.com/VVui-blip/image-data-scraping-resource-pack-from-Pinterest-/issues",
     },
 )
