@@ -1,10 +1,10 @@
-## PinGrabber
+# PinGrabber
 
-[![PyPI version](https://img.shields.io/badge/pypi-v2.1-blue)](https://pypi.org/project/pingrabber/)
+[![PyPI version](https://img.shields.io/badge/pypi-v1.0.2-blue)](https://pypi.org/project/pingrabber/)
 [![Python 3.7+](https://img.shields.io/badge/python-3.7+-green.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-**PinGrabber** is a lightweight Python library that scrapes high‑quality images from public Pinterest boards, single pins, and even short links (pin.it/xxxx). It leverages Pinterest’s official RSS feeds for boards and directly parses HTML for individual pins, extracting full‑resolution originals with minimal effort.
+**PinGrabber** is a lightweight Python library that scrapes high‑quality images from public Pinterest boards, single pins, and short links (`pin.it/xxxx`). It leverages Pinterest’s official RSS feeds for boards and directly parses HTML for individual pins, extracting full‑resolution originals with minimal effort.
 
 ![Pinterest Banner](https://www.logo.wine/a/logo/Pinterest/Pinterest-Icon-White-Dark-Background-Logo.wine.svg)
 
@@ -31,9 +31,9 @@
 - **One‑line download** – download an entire board or a single pin with a single function call.
 - **Automatic quality upgrade** – thumbnail URLs (e.g., `236x`) are replaced with `originals` to fetch the highest available resolution.
 - **Keyword search** – find images by topic without downloading; returns raw image URLs.
-- **Resilient search** – uses the optional `ddgs` package (community‑maintained) for stable search, falling back to direct HTTP requests against multiple search engines (Brave, Mojeek, Yandex, Startpage, Ecosia, Qwant, Gibiru, Ask, Yahoo) with automatic retries, User‑Agent rotation, and delays.
+- **Resilient search** – uses the optional `ddgs` package (community‑maintained) for stable search, falling back to direct HTTP requests against **nine search engines** (Brave, Mojeek, Yandex, Startpage, Ecosia, Qwant, Gibiru, Ask, Yahoo) with automatic retries, User‑Agent rotation, and adaptive delays (Brave gets extra retries and longer backoff on 429 responses).
 - **Customisable** – set output directory, timeout, number of boards/images, retry attempts, and delay.
-- **Detailed logging** – colourful console output with clear progress and error messages.
+- **Detailed logging** – colourful console output (INFO in blue, WARNING in yellow, ERROR in red) with clear progress and error messages.
 - **Lightweight** – built on `requests`, `BeautifulSoup`, and `lxml` for speed and reliability.
 
 ---
@@ -133,8 +133,8 @@ This function does not download any images – it only returns a list of high‑
 How search() works:
 
 · If ddgs is installed, it uses that first (most stable).
-· Otherwise, it tries a chain of search engines (Brave, Mojeek, Yandex, Startpage, Ecosia, Qwant, Gibiru, Ask, Yahoo) with the query site:pinterest.com <keyword>.
-· It rotates User‑Agents, retries on errors (403/429), and inserts random delays to avoid blocking.
+· Otherwise, it tries a chain of nine search engines (Brave, Mojeek, Yandex, Startpage, Ecosia, Qwant, Gibiru, Ask, Yahoo) with the query site:pinterest.com <keyword>.
+· It rotates User‑Agents, retries on errors (403/429) with adaptive backoff – Brave gets extra retries and longer delays on rate‑limit responses to respect its stricter limits.
 · It does not scrape Pinterest’s own search page, because that requires JavaScript.
 
 Customise the search parameters:
@@ -144,8 +144,8 @@ links = pingrabber.search(
     "nature",
     max_boards=5,               # number of boards to scan
     max_images_per_board=10,    # images per board
-    max_retries=3,              # retries per engine on failure
-    delay_seconds=2.5           # base delay between attempts
+    max_retries=2,              # base retries per engine (Brave gets +2 extra)
+    delay_seconds=1.5           # base delay between attempts
 )
 ```
 
@@ -216,7 +216,8 @@ print(resolved)  # full Pinterest URL
 3. Board handling – Converts the board URL to its RSS feed (appending .rss), fetches the XML, and parses all <img> tags inside each <item><description>.
 4. Single pin handling – Fetches the pin’s HTML page directly and extracts the main image from the <meta property="og:image"> tag (already an original‑quality URL).
 5. Quality upgrade – For board images, all thumbnail URLs (e.g., 236x) are transformed to originals to retrieve the highest available resolution.
-6. Download – Each image is downloaded and saved to the specified output directory with a unique filename.
+6. Search fallback chain – When searching by keyword, if ddgs is unavailable, the library attempts requests against nine search engines in order (Brave, Mojeek, Yandex, Startpage, Ecosia, Qwant, Gibiru, Ask, Yahoo) with rotating User‑Agents, per‑engine retries, and adaptive backoff (Brave gets extra retries and longer delays on 429).
+7. Download – Each image is downloaded and saved to the specified output directory with a unique filename.
 
 ---
 
@@ -255,4 +256,3 @@ Disclaimer: This tool is provided “as is”. You are solely responsible for en
 ---
 
 Built by VVui-blip – a quick, clean Pinterest image scraper for developers.
-
