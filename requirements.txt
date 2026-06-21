@@ -5,4 +5,3 @@ lxml>=5.0.0
 # từ khóa). Nếu không cài, search() vẫn hoạt động nhưng tự rơi về phương án
 # dự phòng gọi requests trực tiếp (dễ bị search engine chặn hơn).
 ddgs>=9.0.0
-proxylists>=0.1.0
