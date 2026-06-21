@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      # KHÔNG cần id-token: write khi dùng API Token
 
     steps:
       - name: Checkout source code
@@ -39,4 +40,4 @@ jobs:
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           password: ${{ secrets.PYPI_TOKEN }}
-          attestations: false   # 👈 Thêm dòng này để tắt Trusted Publishing
+          attestations: false   # <--- THÊM DÒNG NÀY để tắt Trusted Publishing
