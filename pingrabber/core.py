@@ -202,27 +202,9 @@ SEARCH_ENGINES = [
         "param": "q",
     },
     {
-        "name": "startpage",
-        # Privacy-focused metasearch frontend, loose HTML structure.
-        "url": "https://www.startpage.com/sp/search",
-        "param": "query",
-    },
-    {
         "name": "ecosia",
         # Bing-backed results, but historically lighter filtering than Bing.
         "url": "https://www.ecosia.org/search",
-        "param": "q",
-    },
-    {
-        "name": "qwant",
-        # French search engine, no-JS "lite" HTML variant available.
-        "url": "https://www.qwant.com/",
-        "param": "q",
-    },
-    {
-        "name": "gibiru",
-        # Anonymous search engine, minimal/basic HTML structure.
-        "url": "https://gibiru.com/results.html",
         "param": "q",
     },
     {
