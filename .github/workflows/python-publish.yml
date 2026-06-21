@@ -11,7 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      # KHÔNG có id-token: write
 
     steps:
       - name: Checkout source code
@@ -36,9 +35,9 @@ jobs:
       - name: Verify package with twine
         run: twine check dist/*
 
-      - name: Publish to PyPI
-        uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          password: ${{ secrets.PYPI_TOKEN }}
-          attestations: false
-          trusted-publishing: false   # 👈 Thêm dòng này
+      - name: Publish to PyPI using twine
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+        run: |
+          twine upload --non-interactive dist/*
