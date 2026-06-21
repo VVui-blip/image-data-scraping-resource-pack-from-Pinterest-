@@ -107,21 +107,6 @@ SINGLE_PIN_PATTERN = re.compile(r"^/pin/(\d+)", re.IGNORECASE)
 # parser riêng (xem hàm _parse_search_results).
 SEARCH_ENGINES = [
     {
-        "name": "duckduckgo_html",
-        "url": "https://html.duckduckgo.com/html/",
-        "param": "q",
-    },
-    {
-        "name": "duckduckgo_lite",
-        "url": "https://lite.duckduckgo.com/lite/",
-        "param": "q",
-    },
-    {
-        "name": "bing",
-        "url": "https://www.bing.com/search",
-        "param": "q",
-    },    
-    {
         "name": "brave",
         "url": "https://search.brave.com/search",
         "param": "q",
