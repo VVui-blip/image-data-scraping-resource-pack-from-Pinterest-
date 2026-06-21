@@ -32,7 +32,7 @@ search_extra = [r for r in all_requirements if r.lower().startswith("ddgs")]
 
 setup(
     name="pingrabber",
-    version="1.0.0",
+    version="1.0.1",
     description="Thư viện cào ảnh chất lượng cao từ board Pinterest công khai qua RSS feed.",
     long_description=long_description,
     long_description_content_type="text/markdown",
