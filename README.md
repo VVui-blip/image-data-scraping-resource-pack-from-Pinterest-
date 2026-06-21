@@ -264,7 +264,7 @@ ddgs (formerly duckduckgo-search) provides a stable way to query multiple search
 
 ---
 
-Quick Start
+## Quick Start
 
 pingrabber.download(url) automatically detects the URL type – board, single pin, or short link – and handles it accordingly. You do not need to differentiate manually.
 
@@ -353,7 +353,7 @@ with DDGS(proxy="socks5://127.0.0.1:9050", timeout=15) as ddgs:
 
 ---
 
-Advanced Usage
+## Advanced Usage
 
 For more fine‑grained control, instantiate the PinGrabber class:
 
@@ -394,7 +394,7 @@ print(resolved)  # full Pinterest URL
 
 ---
 
-How It Works
+## How It Works
 
 1. URL detection – The library automatically identifies whether the input is a board, a single pin, or a short link.
 2. Short link resolution – If it’s a pin.it short link, it follows the redirect to obtain the full Pinterest URL.
@@ -405,7 +405,7 @@ How It Works
 
 ---
 
-Project Structure
+## Project Structure
 
 ```
 pin_grabber/
@@ -420,7 +420,7 @@ pin_grabber/
 
 ---
 
-Dependencies
+## Dependencies
 
 · Python 3.7+
 · requests – HTTP requests.
@@ -431,7 +431,7 @@ All dependencies are listed in requirements.txt and are installed automatically 
 
 ---
 
-License
+## License
 
 This project is released under the MIT License. See the LICENSE file for details.
 
@@ -439,4 +439,4 @@ Disclaimer: This tool is provided “as is”. You are solely responsible for en
 
 ---
 
-Built with ❤️ by VVui-blip – a quick, clean Pinterest image scraper for developers.
+Built by VVui-blip, the project may encounter errors or blocks 429-403. 
