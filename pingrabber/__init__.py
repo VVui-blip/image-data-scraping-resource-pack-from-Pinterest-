@@ -21,4 +21,4 @@ from .core import PinGrabber, download, search
 
 __all__ = ["PinGrabber", "download", "search"]
 
-__version__ = "1.0.2"
+__version__ = "2.0"
