@@ -11,7 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      #  KHÔNG cần id-token: write khi dùng API Token
 
     steps:
       - name: Checkout source code
@@ -27,6 +26,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install build twine
 
+      - name: Clean dist directory          # 👈 BƯỚC MỚI: xóa file cũ
+        run: rm -rf dist/
+
       - name: Build package
         run: python -m build
 
@@ -36,4 +38,4 @@ jobs:
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
-          password: ${{ secrets.PYPI_TOKEN }}  #  Dùng token bạn vừa tạo
+          password: ${{ secrets.PYPI_TOKEN }}
