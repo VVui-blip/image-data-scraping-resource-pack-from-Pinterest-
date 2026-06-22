@@ -1,6 +1,6 @@
 # PinGrabber
 
-[![PyPI version](https://img.shields.io/badge/pypi-v1.0.2-blue)](https://pypi.org/project/pingrabber/)
+[![PyPI version](https://img.shields.io/badge/pypi-v2.2-blue)](https://pypi.org/project/pingrabber/)
 [![Python 3.7+](https://img.shields.io/badge/python-3.7+-green.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
